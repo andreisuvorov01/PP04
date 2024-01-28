@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RemontSpravModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="RemontSpravEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="RemontSpravModel.Accounts" />
+    <EntitySet Name="Roles" EntityType="RemontSpravModel.Roles" />
+    <AssociationSet Name="FK_Accounts_Roles" Association="RemontSpravModel.FK_Accounts_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Accounts" EntitySet="Accounts" />
+    </AssociationSet>
+    <EntitySet Name="RepairMessages" EntityType="RemontSpravModel.RepairMessages" />
+    <EntitySet Name="PreviewPages" EntityType="RemontSpravModel.PreviewPages" />
+    <AssociationSet Name="FK_PreviewPages_RepairMessages" Association="RemontSpravModel.FK_PreviewPages_RepairMessages">
+      <End Role="RepairMessages" EntitySet="RepairMessages" />
+      <End Role="PreviewPages" EntitySet="PreviewPages" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Accounts">
+    <Key>
+      <PropertyRef Name="AccountID" />
+    </Key>
+    <Property Name="AccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Role" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Roles" Relationship="RemontSpravModel.FK_Accounts_Roles" FromRole="Accounts" ToRole="Roles" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Accounts" Relationship="RemontSpravModel.FK_Accounts_Roles" FromRole="Roles" ToRole="Accounts" />
+  </EntityType>
+  <Association Name="FK_Accounts_Roles">
+    <End Type="RemontSpravModel.Roles" Role="Roles" Multiplicity="1" />
+    <End Type="RemontSpravModel.Accounts" Role="Accounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Accounts">
+        <PropertyRef Name="Role" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="RepairMessages">
+    <Key>
+      <PropertyRef Name="RepairMessageID" />
+    </Key>
+    <Property Name="RepairMessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MessageText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PreviewPages" Relationship="RemontSpravModel.FK_PreviewPages_RepairMessages" FromRole="RepairMessages" ToRole="PreviewPages" />
+  </EntityType>
+  <EntityType Name="PreviewPages">
+    <Key>
+      <PropertyRef Name="PreviewPageID" />
+      <PropertyRef Name="ShortText" />
+      <PropertyRef Name="RepairMessageID" />
+    </Key>
+    <Property Name="PreviewPageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ShortText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="RepairMessageID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="RepairMessages" Relationship="RemontSpravModel.FK_PreviewPages_RepairMessages" FromRole="PreviewPages" ToRole="RepairMessages" />
+  </EntityType>
+  <Association Name="FK_PreviewPages_RepairMessages">
+    <End Type="RemontSpravModel.RepairMessages" Role="RepairMessages" Multiplicity="1" />
+    <End Type="RemontSpravModel.PreviewPages" Role="PreviewPages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RepairMessages">
+        <PropertyRef Name="RepairMessageID" />
+      </Principal>
+      <Dependent Role="PreviewPages">
+        <PropertyRef Name="RepairMessageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

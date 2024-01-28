@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище RemontSpravModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "RemontSprav.dbo.Accounts" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="Accounts">
+    <Key>
+      <PropertyRef Name="AccountID" />
+    </Key>
+    <Property Name="AccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Role" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "RemontSprav.dbo.PreviewPages" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="PreviewPages">
+    <Key>
+      <PropertyRef Name="PreviewPageID" />
+      <PropertyRef Name="ShortText" />
+      <PropertyRef Name="RepairMessageID" />
+    </Key>
+    <Property Name="PreviewPageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ShortText" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="RepairMessageID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RepairMessages">
+    <Key>
+      <PropertyRef Name="RepairMessageID" />
+    </Key>
+    <Property Name="RepairMessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MessageText" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_PreviewPages_RepairMessages">
+    <End Role="RepairMessages" Type="Self.RepairMessages" Multiplicity="1" />
+    <End Role="PreviewPages" Type="Self.PreviewPages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RepairMessages">
+        <PropertyRef Name="RepairMessageID" />
+      </Principal>
+      <Dependent Role="PreviewPages">
+        <PropertyRef Name="RepairMessageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище RemontSpravModelContainer">
+    <EntitySet Name="RepairMessages" EntityType="Self.RepairMessages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Accounts" EntityType="Self.Accounts" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Accounts].[AccountID] AS [AccountID], 
+    [Accounts].[Username] AS [Username], 
+    [Accounts].[Password] AS [Password], 
+    [Accounts].[Role] AS [Role]
+    FROM [dbo].[Accounts] AS [Accounts]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PreviewPages" EntityType="Self.PreviewPages" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PreviewPages].[PreviewPageID] AS [PreviewPageID], 
+    [PreviewPages].[ShortText] AS [ShortText], 
+    [PreviewPages].[RepairMessageID] AS [RepairMessageID]
+    FROM [dbo].[PreviewPages] AS [PreviewPages]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_PreviewPages_RepairMessages" Association="Self.FK_PreviewPages_RepairMessages">
+      <End Role="RepairMessages" EntitySet="RepairMessages" />
+      <End Role="PreviewPages" EntitySet="PreviewPages" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
