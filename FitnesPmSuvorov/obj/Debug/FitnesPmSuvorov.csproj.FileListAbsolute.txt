@@ -41,8 +41,6 @@ C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\bin\Debug\EntityF
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\bin\Debug\ru\EntityFramework.resources.dll
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\FitnesPmSuvorov.csproj.AssemblyReference.cache
-C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\AccountAddOrEdit.g.cs
-C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\AccountPage.g.cs
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\AuthWindow.g.cs
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\MainWindow.g.cs
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\TranigAddOrEdit.g.cs
@@ -51,8 +49,6 @@ C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\FitnesP
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\FitnesPmSuvorov_MarkupCompile.cache
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\FitnesPmSuvorov_MarkupCompile.lref
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\App.baml
-C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\AccountAddOrEdit.baml
-C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\AccountPage.baml
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\AuthWindow.baml
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\MainWindow.baml
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\TranigAddOrEdit.baml
@@ -73,4 +69,3 @@ C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\Pr
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\PreviewPageAddOrEdit.baml
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\RepairMessageAddOrEdit.g.cs
 C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\View\RepairMessageAddOrEdit.baml
-C:\Users\Professional\Downloads\FitnesPm-final\FitnesPmSuvorov\obj\Debug\GeneratedInternalTypeHelper.g.cs

@@ -12,7 +12,7 @@ namespace FitnesPmSuvorov.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public virtual void OnpropertyChanged([CallerMemberName] string name = null)
+        public virtual void OnpropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }

@@ -26,14 +26,7 @@
             <ColumnDefinition Width="600"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Popup Name="NotificationPopup" Width="100" Height="100" Placement="Center" IsOpen="False">
-            <Grid Background="#934515">
-                <TextBlock Text="Добавлено в избранное"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
-            </Grid>
-        </Popup>
-        <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Name="Voidite" HorizontalAlignment="Center" Margin="0,0,0,0" Visibility="Visible">
-            <TextBlock Text="Для начала войдите в свою учётную запись" Foreground="Black"  FontSize="25"/>
-        </StackPanel>
+
         <ListBox Name="lstBoxMain" 
          HorizontalAlignment="Left" 
          VerticalAlignment="Center" 
@@ -47,6 +40,7 @@
          Visibility="Hidden" 
          Grid.Row="1" 
          Grid.Column="0"
+         Grid.ColumnSpan="2"
          BorderThickness="0">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
@@ -56,8 +50,8 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <Border Name="Border" 
-                                Background="#934515"
-                                BorderBrush="#934515"
+                                Background="#0051A2"
+                                BorderBrush="#0051A2"
                                 BorderThickness="1"
                                 CornerRadius="10,10,10,10"
                                 Margin="10"
@@ -83,9 +77,9 @@
             <ListBox.ItemTemplate  >
                 <DataTemplate>
                     <Border Name="Border"
-                    Background="#934515"
+                    Background="#0051A2"
                     BorderThickness="1"
-                    BorderBrush="#934515"
+                    BorderBrush="#0051A2"
                     CornerRadius="10,10,10,10"
                     Margin="2"
                     Padding="2">
@@ -95,11 +89,12 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
+
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Left"  >
                                 <!--Заголовок тренировки-->
                                 <TextBlock Grid.Row="0" Text="{Binding PreviewPageID}" Margin="2" Width="0" Height="0"  HorizontalAlignment="Center" Foreground="White"
    TextWrapping="Wrap" />
-                                
+
                                 <TextBlock Grid.Row="0" Text="{Binding ShortText}" Margin="2" Width="500"  HorizontalAlignment="Center" Foreground="White"
                                    TextWrapping="Wrap" />
                                 <TextBlock Grid.Row="0" Text="{Binding RepairMessageID}" Margin="2" Width="0" Height="0"  HorizontalAlignment="Center" Foreground="White"
@@ -111,6 +106,15 @@ TextWrapping="Wrap" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Popup Name="NotificationPopup" Width="100" Height="100" Placement="Center" IsOpen="False">
+            <Grid Background="#0051A2">
+                <TextBlock Text="Добавлено в избранное"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
+            </Grid>
+        </Popup>
+        <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Name="Voidite" HorizontalAlignment="Center" Margin="0,0,0,0" Visibility="Visible">
+            <TextBlock Text="Для начала войдите в свою учётную запись" Foreground="Black"  FontSize="25"/>
+        </StackPanel>
+        
         <StackPanel MouseDown="StackPanel_MouseDown" Grid.Row="0" Grid.ColumnSpan="2" Background="#0051A2">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5">
                 <Button Name="Minimize"  FontFamily="Segoe MDL2 Assets" FontSize="16" Width="35" Height="35"
@@ -137,31 +141,14 @@ TextWrapping="Wrap" />
                 <Image Source="\img\user.png" Height="30" Width="30"/>
             </Button>
         </StackPanel>
-        <Border Grid.Row="1" Grid.Column="1" BorderBrush="#0051A2" BorderThickness="5,0,0,0" Margin="10,5,0,5">
-            <StackPanel Orientation="Vertical" >
-                <Button  Style="{StaticResource ButtonStyle}" Name="AllTraning" Panel.ZIndex="0" Content="Все тренировки" Click="AllTraning_Click" Visibility="Hidden"
-                         Foreground="White" HorizontalAlignment="Left" Height="50" Width="160" VerticalAlignment="Center" Margin="10,5,10,10"/>
-                
-               
-            </StackPanel>
-            
 
-        </Border>
-        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
-            <Button  Style="{StaticResource ButtonStyle}" Name="AddButton" Panel.ZIndex="1" Content="добавить" Click="AddButton_Click" Visibility="Hidden"
-                         Foreground="White" HorizontalAlignment="Left" Height="50"  Width="160" VerticalAlignment="top" Margin="30,10,10,10"/>
-            <Button  Style="{StaticResource ButtonStyle}" Name="EditButton" Panel.ZIndex="1" Content="редактировать" Click="EditButton_Click" Visibility="Hidden"
-                         Foreground="White" HorizontalAlignment="Left" Height="50" Width="160" VerticalAlignment="top" Margin="30,10,10,10"/>
-            <Button  Style="{StaticResource ButtonStyle}" Name="DeleteButton" Panel.ZIndex="1" Content="Удалить" Click="DeleteButton_Click" Visibility="Hidden"
-                         Foreground="White" HorizontalAlignment="Left" Height="50" Width="160" VerticalAlignment="top" Margin="30,10,10,10"/>
 
-            <ComboBox Name="Table" Height="30" Width="160" Panel.ZIndex="1" Background="#934515" Foreground="Black"
-                          VerticalAlignment="Top" SelectionChanged="Table_SelectionChanged" Grid.Column="1" Grid.Row="1" Visibility="Hidden" Margin="30,10,10,10">
-                <ComboBoxItem Content="тренировки"/>
-                <ComboBoxItem Content="аккаунты"/>
-            </ComboBox>
-        </StackPanel>
-        <Frame Name="MainFrame" Grid.Column="0" Grid.Row="1" Visibility="Hidden"/>
+        <ComboBox Name="Table" Height="30" Width="160" Panel.ZIndex="1" Background="#934515" Foreground="Black"
+                  VerticalAlignment="Top" SelectionChanged="Table_SelectionChanged" Grid.Column="1" Grid.Row="1" Visibility="Hidden" Margin="30,230,0,10">
+            <ComboBoxItem Content="решения"/>
+            <ComboBoxItem Content="ошибки"/>
+        </ComboBox>
+        <Frame Name="MainFrame" Grid.ColumnSpan="2" Grid.Row="1" Visibility="Hidden"/>
 
     </Grid>
 </Window>

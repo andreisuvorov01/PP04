@@ -31,6 +31,13 @@ namespace FitnesPmSuvorov.View
             InitializeComponent();
             LoadDataFromDatabase(repairMessageId);
         }
+        private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
         private void LoadDataFromDatabase(int repairMessageId)
         {
             using (var db = new RemontSpravEntities())

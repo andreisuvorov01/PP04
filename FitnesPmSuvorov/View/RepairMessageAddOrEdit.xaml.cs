@@ -23,18 +23,12 @@ namespace FitnesPmSuvorov.View
     public partial class RepairMessageAddOrEdit : Window
     {
         private RepairMessages _message;
-        private readonly RepairMessagesVM _MessagesVM;
         public RepairMessageAddOrEdit(RepairMessages repairMessages)
         {
+            
             InitializeComponent();
-            _MessagesVM = new RepairMessagesVM();
-            foreach (var item in App.Current.Windows)
-            {
-                if (item is MainWindow)
-                {
-                    this.Owner = item as Window;
-                }
-            }
+           
+            
             if (repairMessages is null)
             {
                 _message = repairMessages = new RepairMessages();
@@ -44,8 +38,9 @@ namespace FitnesPmSuvorov.View
                 _message = repairMessages;
             }
             this.DataContext = repairMessages;
-        
-    }
+
+
+        }
         private void BtnSend_Click(object sender, RoutedEventArgs e)
         {
             using (var db = new RemontSpravEntities())
@@ -55,7 +50,6 @@ namespace FitnesPmSuvorov.View
                     db.RepairMessages.AddOrUpdate(_message);
                     db.SaveChanges();
                     System.Windows.MessageBox.Show("данные успешно сохранены", "успешно", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _MessagesVM.LoadData();
 
 
                 }

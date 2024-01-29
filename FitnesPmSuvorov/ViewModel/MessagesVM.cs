@@ -13,7 +13,7 @@ namespace FitnesPmSuvorov.ViewModel
     public class MessagesVM : BaseVm
     {
         #region привязка полей
-        public PreviewPages _SelectedTraining;
+        private PreviewPages _SelectedTraining;
         public ObservableCollection<PreviewPages> _RepairMessages;
 
         public PreviewPages SelectedTraining
@@ -75,9 +75,9 @@ namespace FitnesPmSuvorov.ViewModel
                             {
                                 db.RepairMessages.Remove(TrainigForDelete);
                                 db.SaveChanges();
-                                SelectedTraining = null;
+                                
                                 LoadData();
-                                MessageBox.Show("тренировка успешно удалена", "успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBox.Show("Краткое описание ошибки успешно удалено", "успешно", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                         }
                         catch (Exception ex)

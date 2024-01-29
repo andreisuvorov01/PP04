@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4ad6b3b53321411e91e867cb6921bd23" Name="Diagram1">
+      <Diagram DiagramId="4ad6b3b53321411e91e867cb6921bd23" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="RemontSpravModel.Accounts" Width="1.5" PointX="3" PointY="0.875" />
         <EntityTypeShape EntityType="RemontSpravModel.Roles" Width="1.5" PointX="0.75" PointY="1.125" />
         <AssociationConnector Association="RemontSpravModel.FK_Accounts_Roles" />
-        <EntityTypeShape EntityType="RemontSpravModel.RepairMessages" Width="1.5" PointX="0.75" PointY="4" />
         <EntityTypeShape EntityType="RemontSpravModel.PreviewPages" Width="1.5" PointX="3" PointY="3.875" />
+        <EntityTypeShape EntityType="RemontSpravModel.RepairMessages" Width="1.5" PointX="0.75" PointY="4" />
         <AssociationConnector Association="RemontSpravModel.FK_PreviewPages_RepairMessages" />
       </Diagram>
     </edmx:Diagrams>

@@ -44,37 +44,23 @@ namespace FitnesPmSuvorov
         private Message _RepairMessages;
         private AuthVM _authVM;
         private bool isLogged = false;
-        private AccountAddOrEdit _accountAddOrEdit;
-        private PreviewPageAddOrEdit _TranigAddOrEdit;
         private RepairMessageWindow _repairMessageWindow;
         private RepairMessageAddOrEdit _RepairMessageAddOrEdit;
 
-        private readonly MessagesVM _MessagesVM;
-        private RepairMessagesVM _RepairMessagesVM = new RepairMessagesVM();
-        private readonly AccountVM _AccountVM;
+        private readonly MessagesVM _MessagesVM = new MessagesVM();
+        private readonly RepairMessagesVM _RepairMessagesVM = new RepairMessagesVM();
         public MainWindow()
         {
             InitializeComponent();
             Table.SelectedIndex = 0;
-
-            _MessagesVM = new MessagesVM();
-            _AccountVM = new AccountVM();
-
             _authVM = new AuthVM();
-            _authVM.AuthSuccess += AuthVM_AuthSuccess;
             _authVM.RoleReceived += AuthVM_RoleRecevied;
             lstBoxMain.BorderThickness = new Thickness(0);
             lstBoxMain.DataContext = _MessagesVM;
             list();
-
             MainFrame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-        }
 
-        public void AuthVM_AuthSuccess(object sender, bool e)
-        {
-           
         }
-        
         private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var repairMessageWindow = new RepairMessageWindow(_MessagesVM.SelectedTraining.RepairMessageID);
@@ -87,11 +73,7 @@ namespace FitnesPmSuvorov
             {
                 Voidite.Visibility = Visibility.Hidden;
                 lstBoxMain.Visibility = Visibility.Visible;
-                AllTraning.Visibility = Visibility.Visible;
-
-                AddButton.Visibility = Visibility.Hidden;
-                EditButton.Visibility = Visibility.Hidden;
-                DeleteButton.Visibility = Visibility.Hidden;
+                lstBoxMain.Width = 700;
                 Table.Visibility = Visibility.Hidden;
                 MainFrame.Visibility = Visibility.Hidden;
             }
@@ -99,11 +81,6 @@ namespace FitnesPmSuvorov
             {
                 Voidite.Visibility = Visibility.Hidden;
                 lstBoxMain.Visibility = Visibility.Hidden;
-                AllTraning.Visibility = Visibility.Hidden;
-
-                AddButton.Visibility = Visibility.Visible;
-                EditButton.Visibility = Visibility.Visible;
-                DeleteButton.Visibility = Visibility.Visible;
                 Table.Visibility = Visibility.Visible;
                 MainFrame.Visibility = Visibility.Visible;
             }
@@ -113,29 +90,21 @@ namespace FitnesPmSuvorov
         {
            if(isLogged == true)
             {
-                var result = System.Windows.MessageBox.Show("Вы уже вошли, сменить апккаунт?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var result = System.Windows.MessageBox.Show("Вы уже вошли, сменить аккаунт?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    if(_accountAddOrEdit != null)
-                    {
-                        _accountAddOrEdit.Close();
-                    }
-
-                    if(_TranigAddOrEdit != null)
-                    {
-                        _TranigAddOrEdit.Close();
-                    }
                     var AuthYes = new AuthWindow();
                     AuthYes.DataContext = _authVM;
                     AuthYes.ShowDialog();
+                    list();
                 }
             }
             else
             {
                 var Auth = new AuthWindow();
                 Auth.DataContext = _authVM;
-
                 Auth.ShowDialog();
+                list();
             }
            
         }
@@ -150,7 +119,7 @@ namespace FitnesPmSuvorov
         {
             this.WindowState = WindowState.Minimized;
         }
-        private List<PreviewPages> GetTrainingList()
+        private List<PreviewPages> getPreviewPagesList()
         {
             List<PreviewPages> messages = new List<PreviewPages>();
 
@@ -166,80 +135,14 @@ namespace FitnesPmSuvorov
         }
         private void list()
         {
-            List<PreviewPages> trainingList = GetTrainingList();
+            List<PreviewPages> trainingList = getPreviewPagesList();
             lstBoxMain.ItemsSource = trainingList;
         }
         private void close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-        private void AllTraning_Click(object sender, RoutedEventArgs e)
-        {
-            list();
-        }
-
-        
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            switch(Table.SelectedIndex)
-            {
-                case 0:
-                    {
-                        var TranigWindows = new TranigAddOrEdit(null);
-                        TranigWindows.Show();
-                    break;
-                }
-                case 1:
-                    {
-                        var PreviewWindows = new PreviewPageAddOrEdit(null);
-                        PreviewWindows.Show();
-                        break;
-                    }
-            }
-            
-        }
-
-            private void EditButton_Click(object sender, RoutedEventArgs e)
-        {
-            switch (Table.SelectedIndex)
-            {
-                case 0:
-                    {
-                        var RepairEdit = new RepairMessageAddOrEdit(_RepairMessagesVM.SelectedRepairMessages);
-                        Trace.WriteLine(_MessagesVM.SelectedTraining);
-                        _RepairMessageAddOrEdit = RepairEdit;
-                        RepairEdit.Show();
-                        break;
-                    }
-                case 1:
-                    {
-                        var PreviewWindows = new PreviewPageAddOrEdit(_MessagesVM.SelectedTraining);
-                        Trace.WriteLine(_MessagesVM.SelectedTraining);
-                        _TranigAddOrEdit = PreviewWindows;
-                        PreviewWindows.Show();
-                        break;
-                    }
-            }
-        }
-
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            switch (Table.SelectedIndex)
-            {
-                case 0:
-                    {
-                        _MessagesVM.DeleteTrainig();                        
-                        break;
-                    }
-                case 1:
-                    {
-                        _AccountVM.DeleteTrainig();
-                        break;
-                    }
-            }
-        }
-
+       
         private void Table_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch(Table.SelectedIndex)

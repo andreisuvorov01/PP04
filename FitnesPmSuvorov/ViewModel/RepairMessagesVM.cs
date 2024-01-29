@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -13,48 +14,48 @@ namespace FitnesPmSuvorov.ViewModel
 {
     public class RepairMessagesVM : BaseVm
     {
-        private RepairMessages _selectedRepairMessages;
-        public ObservableCollection<RepairMessages> _RepairMessages;
-
-        public RepairMessages SelectedRepairMessages
-        {
-            get => _selectedRepairMessages;
-            set
-            {
-                _selectedRepairMessages = value;
-                OnpropertyChanged(nameof(SelectedRepairMessages));
-            }
-        }
-
-        public ObservableCollection<RepairMessages> RepairMessagesCollection
-        {
-            get => _RepairMessages;
-            set
-            {
-                _RepairMessages = value;
-                OnpropertyChanged(nameof(RepairMessagesCollection));
-            }
-        }
-
         public RepairMessagesVM()
         {
-            RepairMessagesCollection = new ObservableCollection<RepairMessages>();
+            RepairMessages = new ObservableCollection<RepairMessages>();
 
             LoadData();
-            Trace.WriteLine(RepairMessagesCollection);
+            Trace.WriteLine(SelectedRepairMessage);
         }
+            public ObservableCollection<RepairMessages> repairMessagesPrivate;
+            private RepairMessages selectedRepairMessagePrivate;
 
-        public void LoadData()
-        {
-            if (_RepairMessages.Count > 0)
+            public ObservableCollection<RepairMessages> RepairMessages
             {
-                _RepairMessages.Clear();
+                get =>  repairMessagesPrivate; 
+                set
+                {
+                    repairMessagesPrivate = value;
+                    OnpropertyChanged(nameof(RepairMessages));
+                }
+            }
+
+            public RepairMessages SelectedRepairMessage
+            {
+            get =>  selectedRepairMessagePrivate; 
+                set
+                {
+                    selectedRepairMessagePrivate = value;
+                    OnpropertyChanged(nameof(SelectedRepairMessage));
+                }
+            }
+
+
+            public void LoadData()
+        {
+            if (RepairMessages?.Count > 0)
+            {
+                RepairMessages.Clear();
             }
 
             var result = DbSingleTone.Db_s.RepairMessages.ToList();
             if (result != null)
             {
-                result.ForEach(a => RepairMessagesCollection.Add(a));
+                result.ForEach(a => RepairMessages.Add(a));
             }
             else
             {
@@ -65,35 +66,39 @@ namespace FitnesPmSuvorov.ViewModel
 
         public void DeleteTrainig()
         {
-            if (SelectedRepairMessages is null)
+            Trace.WriteLine(SelectedRepairMessage);
+            if (SelectedRepairMessage != null)
             {
-                MessageBox.Show("Выберите объект для удаления", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            MessageBoxResult result = MessageBox.Show("Вы действительно хотите удалить этот элемент?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (result == MessageBoxResult.Yes)
-            {
-                try
+                MessageBoxResult result = MessageBox.Show("Вы действительно хотите удалить этот элемент?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
                 {
-                    using (var db = new RemontSpravEntities())
+                    try
                     {
-                        var trainigForDelete = db.RepairMessages.Find(SelectedRepairMessages.RepairMessageID);
-                        if (trainigForDelete != null)
+                        using (var db = new RemontSpravEntities())
                         {
-                            db.RepairMessages.Remove(trainigForDelete);
-                            db.SaveChanges();
-                            SelectedRepairMessages = null; // сбрасываем текущий выбранный элемент на null
-                            LoadData(); // перезагружаем данные для обновления
-                            MessageBox.Show("Тренировка успешно удалена", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                            var trainigForDelete = db.RepairMessages.Find(SelectedRepairMessage.RepairMessageID);
+                            if (trainigForDelete != null)
+                            {
+                                db.RepairMessages.Remove(trainigForDelete);
+                                db.SaveChanges();
+                                
+                                LoadData(); // перезагружаем данные для обновления
+                                MessageBox.Show("Решение успешно удалено", "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
+            else
+            {
+                MessageBox.Show( "Ошибка","не выбран элемент", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            
         }
     }
     }

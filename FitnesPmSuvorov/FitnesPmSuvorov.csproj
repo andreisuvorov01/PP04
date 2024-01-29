@@ -94,15 +94,8 @@
     <Compile Include="DB\Roles.cs">
       <DependentUpon>RemontSpravModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\AccountVM.cs" />
     <Compile Include="ViewModel\MessagesVM.cs" />
     <Compile Include="ViewModel\RepairMessagesVM.cs" />
-    <Compile Include="View\AccountAddOrEdit.xaml.cs">
-      <DependentUpon>AccountAddOrEdit.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\AccountPage.xaml.cs">
-      <DependentUpon>AccountPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\DataRepairMessage.xaml.cs">
       <DependentUpon>DataRepairMessage.xaml</DependentUpon>
     </Compile>
@@ -121,14 +114,6 @@
     <Compile Include="View\TranigAddOrEdit.xaml.cs">
       <DependentUpon>TranigAddOrEdit.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\AccountAddOrEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\AccountPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\AuthWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

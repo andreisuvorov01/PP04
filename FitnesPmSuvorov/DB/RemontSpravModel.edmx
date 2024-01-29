@@ -19,13 +19,9 @@
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Role" Type="int" Nullable="false" />
         </EntityType>
-        <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "RemontSprav.dbo.PreviewPages" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="PreviewPages">
           <Key>
             <PropertyRef Name="PreviewPageID" />
-            <PropertyRef Name="ShortText" />
-            <PropertyRef Name="RepairMessageID" />
           </Key>
           <Property Name="PreviewPageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ShortText" Type="nvarchar(max)" Nullable="false" />
@@ -45,6 +41,18 @@
           <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Accounts_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Accounts">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PreviewPages_RepairMessages">
           <End Role="RepairMessages" Type="Self.RepairMessages" Multiplicity="1" />
           <End Role="PreviewPages" Type="Self.PreviewPages" Multiplicity="*" />
@@ -58,6 +66,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Хранилище RemontSpravModelContainer">
+          <EntitySet Name="PreviewPages" EntityType="Self.PreviewPages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RepairMessages" EntityType="Self.RepairMessages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Accounts" EntityType="Self.Accounts" store:Type="Tables" store:Schema="dbo">
@@ -68,13 +77,10 @@
     [Accounts].[Role] AS [Role]
     FROM [dbo].[Accounts] AS [Accounts]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="PreviewPages" EntityType="Self.PreviewPages" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [PreviewPages].[PreviewPageID] AS [PreviewPageID], 
-    [PreviewPages].[ShortText] AS [ShortText], 
-    [PreviewPages].[RepairMessageID] AS [RepairMessageID]
-    FROM [dbo].[PreviewPages] AS [PreviewPages]</DefiningQuery>
-          </EntitySet>
+          <AssociationSet Name="FK_Accounts_Roles" Association="Self.FK_Accounts_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Accounts" EntitySet="Accounts" />
+          </AssociationSet>
           <AssociationSet Name="FK_PreviewPages_RepairMessages" Association="Self.FK_PreviewPages_RepairMessages">
             <End Role="RepairMessages" EntitySet="RepairMessages" />
             <End Role="PreviewPages" EntitySet="PreviewPages" />
@@ -91,8 +97,8 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Accounts" EntitySet="Accounts" />
           </AssociationSet>
-          <EntitySet Name="RepairMessages" EntityType="RemontSpravModel.RepairMessages" />
           <EntitySet Name="PreviewPages" EntityType="RemontSpravModel.PreviewPages" />
+          <EntitySet Name="RepairMessages" EntityType="RemontSpravModel.RepairMessages" />
           <AssociationSet Name="FK_PreviewPages_RepairMessages" Association="RemontSpravModel.FK_PreviewPages_RepairMessages">
             <End Role="RepairMessages" EntitySet="RepairMessages" />
             <End Role="PreviewPages" EntitySet="PreviewPages" />
@@ -128,6 +134,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PreviewPages">
+          <Key>
+            <PropertyRef Name="PreviewPageID" />
+          </Key>
+          <Property Name="PreviewPageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShortText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RepairMessageID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RepairMessages" Relationship="RemontSpravModel.FK_PreviewPages_RepairMessages" FromRole="PreviewPages" ToRole="RepairMessages" />
+        </EntityType>
         <EntityType Name="RepairMessages">
           <Key>
             <PropertyRef Name="RepairMessageID" />
@@ -135,17 +150,6 @@
           <Property Name="RepairMessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MessageText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PreviewPages" Relationship="RemontSpravModel.FK_PreviewPages_RepairMessages" FromRole="RepairMessages" ToRole="PreviewPages" />
-        </EntityType>
-        <EntityType Name="PreviewPages">
-          <Key>
-            <PropertyRef Name="PreviewPageID" />
-            <PropertyRef Name="ShortText" />
-            <PropertyRef Name="RepairMessageID" />
-          </Key>
-          <Property Name="PreviewPageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ShortText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RepairMessageID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="RepairMessages" Relationship="RemontSpravModel.FK_PreviewPages_RepairMessages" FromRole="PreviewPages" ToRole="RepairMessages" />
         </EntityType>
         <Association Name="FK_PreviewPages_RepairMessages">
           <End Type="RemontSpravModel.RepairMessages" Role="RepairMessages" Multiplicity="1" />
@@ -183,20 +187,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RepairMessages">
-            <EntityTypeMapping TypeName="RemontSpravModel.RepairMessages">
-              <MappingFragment StoreEntitySet="RepairMessages">
-                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
-                <ScalarProperty Name="RepairMessageID" ColumnName="RepairMessageID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PreviewPages">
             <EntityTypeMapping TypeName="RemontSpravModel.PreviewPages">
               <MappingFragment StoreEntitySet="PreviewPages">
                 <ScalarProperty Name="RepairMessageID" ColumnName="RepairMessageID" />
                 <ScalarProperty Name="ShortText" ColumnName="ShortText" />
                 <ScalarProperty Name="PreviewPageID" ColumnName="PreviewPageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RepairMessages">
+            <EntityTypeMapping TypeName="RemontSpravModel.RepairMessages">
+              <MappingFragment StoreEntitySet="RepairMessages">
+                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+                <ScalarProperty Name="RepairMessageID" ColumnName="RepairMessageID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

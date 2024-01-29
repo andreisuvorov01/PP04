@@ -2,19 +2,36 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:FitnesPmSuvorov.View" xmlns:viewmodel="clr-namespace:FitnesPmSuvorov.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MessagesVM}"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:viewmodel="clr-namespace:FitnesPmSuvorov.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MessagesVM}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DatePreviewPage">
 
-    <Grid>
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="600"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="#0051A2" BorderThickness="5,0,0,0" Margin="10,5,0,5">
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+                <Button  Style="{StaticResource ButtonStyle}" Name="AddButton" Panel.ZIndex="1" Content="добавить" Click="AddButton_Click" Visibility="Visible"
+                         Foreground="White" HorizontalAlignment="Left" Height="50"  Width="160" VerticalAlignment="top" Margin="15,10,10,10"/>
+                <Button  Style="{StaticResource ButtonStyle}" Name="EditButton" Panel.ZIndex="1" Content="редактировать" Click="EditButton_Click" Visibility="Visible"
+                         Foreground="White" HorizontalAlignment="Left" Height="50" Width="160" VerticalAlignment="top" Margin="15,10,10,10"/>
+                <Button  Style="{StaticResource ButtonStyle}" Name="DeleteButton" Panel.ZIndex="1" Content="Удалить" Click="DeleteButton_Click" Visibility="Visible"
+                         Foreground="White" HorizontalAlignment="Left" Height="50" Width="160" VerticalAlignment="top" Margin="15,10,10,10"/>
+            </StackPanel>
+        </Border>
         <DataGrid
-Background="#ddd2b4"
-IsReadOnly="True"
-SelectedItem="{Binding SelectedTraining}"
-AutoGenerateColumns="False"
-ItemsSource="{Binding MessageCollection}" >
+            Grid.Column="0"
+            Background="#ddd2b4"
+            Width="600"
+            HorizontalAlignment="Left"
+    Name="DataGridPreview"
+    SelectedItem="{Binding SelectedTraining}"
+    AutoGenerateColumns="False"
+    ItemsSource="{Binding MessageCollection}" >
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">
                     <Setter Property="Background" Value="#EBCFB2"/>
@@ -27,11 +44,11 @@ ItemsSource="{Binding MessageCollection}" >
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn
-        Header="электронная почта"
+        Header="Описание проблемы"
         Foreground="Black"
         Binding="{Binding ShortText}" />
                 <DataGridTextColumn
-Header="электронная почта"
+Header="Номер её решения"
 Foreground="Black"
 Binding="{Binding RepairMessageID}" />
             </DataGrid.Columns>

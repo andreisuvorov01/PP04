@@ -19,20 +19,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="RepairMessages">
-      <EntityTypeMapping TypeName="RemontSpravModel.RepairMessages">
-        <MappingFragment StoreEntitySet="RepairMessages">
-          <ScalarProperty Name="MessageText" ColumnName="MessageText" />
-          <ScalarProperty Name="RepairMessageID" ColumnName="RepairMessageID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="PreviewPages">
       <EntityTypeMapping TypeName="RemontSpravModel.PreviewPages">
         <MappingFragment StoreEntitySet="PreviewPages">
           <ScalarProperty Name="RepairMessageID" ColumnName="RepairMessageID" />
           <ScalarProperty Name="ShortText" ColumnName="ShortText" />
           <ScalarProperty Name="PreviewPageID" ColumnName="PreviewPageID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RepairMessages">
+      <EntityTypeMapping TypeName="RemontSpravModel.RepairMessages">
+        <MappingFragment StoreEntitySet="RepairMessages">
+          <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+          <ScalarProperty Name="RepairMessageID" ColumnName="RepairMessageID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

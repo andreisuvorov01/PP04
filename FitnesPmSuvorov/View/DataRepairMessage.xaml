@@ -8,16 +8,32 @@
       
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DataRepairMessage">
-    <Page.DataContext>
-        <viewmodel:RepairMessagesVM />
-    </Page.DataContext>
-    <Grid>
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="600"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="#0051A2" BorderThickness="5,0,0,0" Margin="10,5,0,5">
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+            <Button  Style="{StaticResource ButtonStyle}" Name="AddButton" Panel.ZIndex="1" Content="добавить" Click="AddButton_Click" Visibility="Visible"
+                     Foreground="White" HorizontalAlignment="Left" Height="50"  Width="160" VerticalAlignment="top" Margin="15,10,10,10"/>
+            <Button  Style="{StaticResource ButtonStyle}" Name="EditButton" Panel.ZIndex="1" Content="редактировать" Click="EditButton_Click" Visibility="Visible"
+                     Foreground="White" HorizontalAlignment="Left" Height="50" Width="160" VerticalAlignment="top" Margin="15,10,10,10"/>
+            <Button  Style="{StaticResource ButtonStyle}" Name="DeleteButton" Panel.ZIndex="1" Content="Удалить" Click="DeleteButton_Click" Visibility="Visible"
+                     Foreground="White" HorizontalAlignment="Left" Height="50" Width="160" VerticalAlignment="top" Margin="15,10,10,10"/>
+        </StackPanel>
+            </Border>
         <DataGrid
+            Grid.Column="0"
      Background="#ddd2b4"
+     Name="RepairGrid"
+     Width="600"
+     HorizontalAlignment="Left"
      IsReadOnly="True"
-       SelectedItem="{Binding SelectedRepairMessages}"
+     SelectedItem="{Binding SelectedRepairMessage}"
      AutoGenerateColumns="False"
-     ItemsSource="{Binding RepairMessagesCollection}" >
+    
+     ItemsSource="{Binding RepairMessages}" >
             <DataGrid.Resources>
                 <Style TargetType="DataGridRow">
                     <Setter Property="Background" Value="#EBCFB2"/>
@@ -30,12 +46,17 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn
-Header="электронная почта"
+                    Header="электронная почта"
+                    Foreground="Black"
+                    Visibility="Hidden"
+                    Binding="{Binding PreviewPages}" />
+                <DataGridTextColumn
+Header="Номер решения"
 Foreground="Black"
-                   
+     
 Binding="{Binding RepairMessageID}" />
                 <DataGridTextColumn
-             Header="электронная почта"
+             Header="текст решения"
              Foreground="Black"
              Binding="{Binding MessageText}" />
             </DataGrid.Columns>

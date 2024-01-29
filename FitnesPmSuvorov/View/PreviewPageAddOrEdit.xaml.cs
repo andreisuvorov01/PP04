@@ -28,13 +28,7 @@ namespace FitnesPmSuvorov.View
         {
             InitializeComponent();
             _MessagesVM = new MessagesVM();
-            foreach (var item in App.Current.Windows)
-            {
-                if (item is MainWindow)
-                {
-                    this.Owner = item as Window;
-                }
-            }
+            
             if (repairMessages is null)
             {
                 _message = repairMessages = new PreviewPages();

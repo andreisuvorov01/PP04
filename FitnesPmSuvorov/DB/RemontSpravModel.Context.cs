@@ -27,7 +27,7 @@ namespace FitnesPmSuvorov.DB
     
         public virtual DbSet<Accounts> Accounts { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
-        public virtual DbSet<RepairMessages> RepairMessages { get; set; }
         public virtual DbSet<PreviewPages> PreviewPages { get; set; }
+        public virtual DbSet<RepairMessages> RepairMessages { get; set; }
     }
 }
